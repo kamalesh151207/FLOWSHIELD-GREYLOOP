@@ -1,0 +1,84 @@
+/* ==========================================================================
+   FLOWSHIELD–GREYLOOP | SCADA Control & IoT Monitoring Dashboard
+   Responsive Media Queries & Screen Adaptations
+   ========================================================================== */
+
+@media (max-width: 1280px) {
+  .status-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dash-middle-grid {
+    grid-template-columns: 1fr;
+  }
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .quality-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  #sidebar {
+    width: 60px;
+  }
+  .brand-text,
+  .nav-section-title,
+  .nav-item span,
+  .nav-item .badge,
+  .sidebar-footer {
+    display: none;
+  }
+  .nav-item {
+    justify-content: center;
+    padding: 10px;
+  }
+  .status-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .m3-controls-grid {
+    grid-template-columns: 1fr;
+  }
+  .timeline-bar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .dash-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  #top-header {
+    padding: 0 10px;
+  }
+  .header-title-group h2 {
+    font-size: 13px;
+  }
+  .header-clock {
+    display: none;
+  }
+  .status-kpi-row {
+    grid-template-columns: 1fr;
+  }
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+  .m3-status-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .control-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .stage-control-buttons {
+    flex-wrap: wrap;
+  }
+}
+

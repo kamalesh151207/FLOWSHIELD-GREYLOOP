@@ -92,7 +92,7 @@ html, body {
   }
 
   .timeline-bar {
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 
   .sensor-grid {
@@ -147,7 +147,7 @@ html, body {
   }
 
   .timeline-bar {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 8px;
   }
 
@@ -245,6 +245,18 @@ html, body {
     gap: 12px;
   }
 
+  /* Tablet Live Stage Card */
+  .live-stage-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .live-stage-right {
+    width: 100%;
+    max-width: 100%;
+  }
+
   /* Tablet Grids */
   .status-kpi-row {
     grid-template-columns: repeat(3, 1fr);
@@ -277,8 +289,23 @@ html, body {
   }
 
   .timeline-bar {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 6px;
+  }
+
+  .monitor-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .flow-stages-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .alert-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
 
   /* Controls Row on Tablet */
@@ -457,6 +484,43 @@ html, body {
     min-width: 620px;
     height: 100%;
     display: block;
+  }
+
+  /* Live Stage Card on Mobile */
+  .live-stage-card {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+
+  .stage-number-tag {
+    font-size: 10.5px;
+    padding: 2px 6px;
+  }
+
+  .stage-name-text {
+    font-size: 14px;
+  }
+
+  .stage-status-row {
+    font-size: 10.5px;
+  }
+
+  .stage-desc-text {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+
+  .stage-flow-tracker {
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+
+  .tracker-node {
+    font-size: 9.5px;
+    padding: 2px 6px;
   }
 
   /* 2. Status & KPI Strip */
@@ -757,7 +821,41 @@ html, body {
     font-size: 10px;
   }
 
-  /* 6. Live Charts */
+  /* 6. Live Monitor Grid on Mobile */
+  .monitor-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .monitor-kpi-card {
+    padding: 8px 10px;
+  }
+
+  .m-kpi-val {
+    font-size: 14px;
+  }
+
+  /* 7. Flow Stages Grid on Mobile */
+  .flow-stages-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* 8. Alert Stats on Mobile */
+  .alert-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .alert-stat-box {
+    padding: 6px 8px;
+  }
+
+  .a-stat-val {
+    font-size: 15px;
+  }
+
+  /* 9. Live Charts */
   .chart-panel {
     padding: 10px 12px;
     border-radius: var(--radius-md);
@@ -772,7 +870,7 @@ html, body {
     height: 140px;
   }
 
-  /* 7. Water Quality & Health */
+  /* 10. Water Quality & Health */
   .quality-panel {
     padding: 10px 12px;
     border-radius: var(--radius-md);
@@ -793,7 +891,7 @@ html, body {
     gap: 6px;
   }
 
-  /* 8. Table Containers */
+  /* 11. Table Containers */
   .events-panel {
     padding: 10px 12px;
     border-radius: var(--radius-md);

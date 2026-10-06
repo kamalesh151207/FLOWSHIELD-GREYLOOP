@@ -50,6 +50,8 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .schematic-title-group h3 {
@@ -96,7 +98,158 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   2. TOP STATUS INFORMATION & CONTROL STRIP
+   2. LIVE GREYWATER TREATMENT STAGE HERO CARD
+   ══════════════════════════════════════════════════════════════════════════ */
+.live-stage-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--blue-secondary);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
+  flex-wrap: wrap;
+  transition: all 0.2s ease;
+}
+
+.live-stage-card.flood-active {
+  border-color: var(--status-red);
+  background: #FFFDFD;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.1);
+}
+
+.live-stage-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 260px;
+}
+
+.stage-section-badge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--blue-secondary);
+}
+
+.stage-hero-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-number-tag {
+  background: var(--navy-primary);
+  color: #FFFFFF;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  letter-spacing: 0.3px;
+}
+
+.stage-name-text {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy-primary);
+  letter-spacing: -0.2px;
+}
+
+.stage-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.stage-status-title {
+  font-weight: 700;
+  color: var(--status-green);
+}
+
+.stage-status-sub {
+  color: var(--text-secondary);
+}
+
+.live-stage-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 620px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.stage-desc-text {
+  font-size: 12px;
+  color: var(--navy-primary);
+  line-height: 1.45;
+  font-weight: 500;
+  background: var(--bg-card-subtle);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--blue-secondary);
+}
+
+.stage-flow-tracker {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tracker-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.tracker-node:hover {
+  border-color: var(--blue-secondary);
+}
+
+.tracker-node.done {
+  background: var(--status-green-bg);
+  border-color: var(--status-green-border);
+  color: var(--status-green);
+}
+
+.tracker-node.curr {
+  background: var(--status-blue-bg);
+  border-color: var(--blue-secondary);
+  color: var(--blue-secondary);
+  box-shadow: 0 0 0 1px var(--blue-secondary);
+}
+
+.tracker-node.upcoming {
+  color: var(--text-muted);
+}
+
+.tracker-dot {
+  font-family: var(--font-mono);
+  font-weight: 800;
+}
+
+.tracker-arrow {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   3. TOP STATUS INFORMATION & CONTROL STRIP
    ══════════════════════════════════════════════════════════════════════════ */
 .status-strip-panel {
   background: var(--bg-card);
@@ -213,6 +366,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .btn-action {
@@ -228,6 +382,7 @@
   align-items: center;
   gap: 4px;
   transition: all 0.15s ease;
+  user-select: none;
 }
 
 .btn-action:hover {
@@ -245,6 +400,12 @@
   background-color: var(--navy-dark);
 }
 
+.btn-action.btn-warn {
+  background-color: var(--status-amber-bg);
+  color: var(--status-amber);
+  border-color: var(--status-amber-border);
+}
+
 /* Timeline Stepper Bar */
 .timeline-section {
   display: flex;
@@ -255,7 +416,7 @@
 
 .timeline-bar {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 6px;
 }
 
@@ -314,7 +475,7 @@
 .timeline-step.current .step-status { color: var(--blue-secondary); }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   3. DETAILS & ANALYTICS GRIDS (BELOW THE FOLD)
+   4. DETAILS & ANALYTICS GRIDS
    ══════════════════════════════════════════════════════════════════════════ */
 .dash-two-col {
   display: grid;
@@ -339,9 +500,12 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 6px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.card-header-clean h4 {
+.card-header-clean h4,
+.card-header-clean h3 {
   font-size: 13px;
   font-weight: 700;
   color: var(--navy-primary);
@@ -664,13 +828,14 @@
 
 .events-table th {
   text-align: left;
-  padding: 6px 8px;
+  padding: 7px 8px;
   color: var(--text-secondary);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border-color);
   background: var(--bg-card-subtle);
+  white-space: nowrap;
 }
 
 .events-table td {
@@ -694,6 +859,26 @@
 .sev-tag.info { background: var(--status-blue-bg); color: var(--blue-secondary); }
 .sev-tag.warning { background: var(--status-amber-bg); color: var(--status-amber); }
 .sev-tag.critical { background: var(--status-red-bg); color: var(--status-red); }
+
+.kpi-status-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.kpi-status-tag.ok {
+  background: var(--status-green-bg);
+  color: var(--status-green);
+  border: 1px solid var(--status-green-border);
+}
+
+.kpi-status-tag.crit {
+  background: var(--status-red-bg);
+  color: var(--status-red);
+  border: 1px solid var(--status-red-border);
+}
 
 /* System Health Grid */
 .health-grid {
@@ -728,7 +913,7 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   8. COMPACT M3 TREATED WATER ROUTING CONTROL & STATUS STYLES
+   5. COMPACT M3 TREATED WATER ROUTING CONTROL & STATUS STYLES
    ══════════════════════════════════════════════════════════════════════════ */
 .m3-routing-panel {
   background: var(--bg-card);
@@ -791,7 +976,6 @@
   text-transform: uppercase;
 }
 
-/* 3-Way Compact Button Grid (52-58px height) */
 .m3-controls-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -957,7 +1141,237 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   9. IN-DASHBOARD TOAST NOTIFICATION
+   6. LIVE MONITOR & SYSTEM FLOW & SENSORS EXTENSIONS
+   ══════════════════════════════════════════════════════════════════════════ */
+.monitor-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.monitor-kpi-card {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.m-kpi-title {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+}
+
+.m-kpi-val {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy-primary);
+  font-family: var(--font-mono);
+}
+
+.m-kpi-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mini-progress-bar {
+  width: 100%;
+  height: 5px;
+  background: #E2E8F0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.mini-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Flow Stages Grid */
+.flow-stages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.flow-stage-detail-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.flow-stage-detail-card:hover {
+  border-color: var(--blue-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.flow-stage-detail-card.active-flow-card {
+  border-color: var(--blue-secondary);
+  background: #F8FAFC;
+  box-shadow: 0 0 0 1px var(--blue-secondary), var(--shadow-sm);
+}
+
+.flow-stage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.flow-stage-num {
+  background: var(--navy-primary);
+  color: #FFFFFF;
+  font-size: 9.5px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.flow-stage-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--navy-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flow-stage-tag {
+  font-size: 8.5px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--bg-card-subtle);
+  color: var(--text-muted);
+}
+
+.flow-stage-tag.done {
+  background: var(--status-green-bg);
+  color: var(--status-green);
+}
+
+.flow-stage-tag.active {
+  background: var(--status-blue-bg);
+  color: var(--blue-secondary);
+}
+
+.flow-stage-body {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.flow-stage-io {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--navy-primary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 4px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   7. ALERTS & HISTORY TOOLBARS & STATS
+   ══════════════════════════════════════════════════════════════════════════ */
+.table-filter-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0 10px 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn-group {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--bg-card-subtle);
+  padding: 2px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.btn-filter {
+  background: transparent;
+  border: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-filter:hover {
+  color: var(--navy-primary);
+}
+
+.btn-filter.active {
+  background: #FFFFFF;
+  color: var(--blue-secondary);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.alert-stat-box {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--navy-primary);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.a-stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.a-stat-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy-primary);
+  font-family: var(--font-mono);
+}
+
+.wq-comparison-table-wrap {
+  overflow-x: auto;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   8. IN-DASHBOARD TOAST NOTIFICATION
    ══════════════════════════════════════════════════════════════════════════ */
 .dashboard-toast {
   position: fixed;
@@ -1001,4 +1415,3 @@
   background: #991B1B;
   border-left: 4px solid #EF4444;
 }
-

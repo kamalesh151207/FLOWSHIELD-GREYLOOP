@@ -1,6 +1,7 @@
 /**
  * FLOWSHIELD–GREYLOOP | SCADA Application Controller & Orchestrator
- * Comprehensive event delegation, modal listeners, keyboard shortcuts, and state synchronization
+ * Comprehensive event delegation, URL Hash Navigation, modal listeners,
+ * keyboard shortcuts, and reactive state synchronization.
  */
 
 (function (window, document) {
@@ -22,6 +23,9 @@
       });
     }
 
+    // Handle initial hash navigation if present
+    handleHashNavigation();
+
     // Initial render
     if (window.Dashboard && typeof window.Dashboard.render === 'function' && window.SystemState) {
       window.Dashboard.render(window.SystemState.getState());
@@ -38,13 +42,15 @@
   });
 
   /* ══════════════════════════════════════════════════════════════════════════
-     NAVIGATION & VIEW SWITCHING & MOBILE DRAWER
+     NAVIGATION & VIEW SWITCHING & URL HASH SUPPORT & MOBILE DRAWER
      ══════════════════════════════════════════════════════════════════════════ */
   function initNavigation() {
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
     const btnMobileMenu = document.getElementById('btn-mobile-menu');
     const btnSidebarClose = document.getElementById('btn-sidebar-close');
+    const btnHeaderNotif = document.getElementById('btn-header-notif');
+    const dbStatusBadge = document.getElementById('db-status-badge');
 
     function openSidebar() {
       if (sidebar) sidebar.classList.add('mobile-open');
@@ -78,6 +84,20 @@
       });
     }
 
+    if (btnHeaderNotif) {
+      btnHeaderNotif.addEventListener('click', (e) => {
+        e.preventDefault();
+        navigateToView('alerts');
+      });
+    }
+
+    if (dbStatusBadge) {
+      dbStatusBadge.addEventListener('click', () => {
+        const modal = document.getElementById('demo-modal');
+        if (modal) modal.classList.add('active');
+      });
+    }
+
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', (e) => {
@@ -85,16 +105,14 @@
         const targetView = item.dataset.view;
         if (!targetView) return;
 
-        navItems.forEach(el => el.classList.remove('active'));
-        item.classList.add('active');
-
-        if (window.Dashboard && typeof window.Dashboard.setActiveView === 'function') {
-          window.Dashboard.setActiveView(targetView);
-        }
-
-        // Auto close drawer on mobile after selection
+        navigateToView(targetView);
         closeSidebar();
       });
+    });
+
+    // Hash change listener
+    window.addEventListener('hashchange', () => {
+      handleHashNavigation();
     });
 
     // Window resize & orientation observer to re-render charts & schematics cleanly
@@ -104,12 +122,19 @@
       resizeTimer = setTimeout(() => {
         if (window.SystemState) {
           const state = window.SystemState.getState();
+          const activeView = window.Dashboard && window.Dashboard.getActiveView ? window.Dashboard.getActiveView() : 'overview';
+          
           if (window.ChartManager) {
-            window.ChartManager.drawFlowChart('chart-flow-canvas', state.history);
-            window.ChartManager.drawLevelChart('chart-level-canvas', state.history);
+            if (activeView === 'overview') {
+              window.ChartManager.drawFlowChart('chart-flow-canvas', state.history);
+              window.ChartManager.drawLevelChart('chart-level-canvas', state.history);
+            } else if (activeView === 'live-monitor') {
+              window.ChartManager.drawFlowChart('chart-monitor-flow-canvas', state.history);
+              window.ChartManager.drawMoistureChart('chart-monitor-level-canvas', state.history);
+            }
           }
-          if (window.SchematicRenderer && window.Dashboard) {
-            const activeView = window.Dashboard.getActiveView ? window.Dashboard.getActiveView() : 'overview';
+
+          if (window.SchematicRenderer) {
             if (activeView === 'overview') {
               window.SchematicRenderer.renderSchematic('svg-schematic-container', state);
             } else if (activeView === 'system-flow') {
@@ -119,6 +144,24 @@
         }
       }, 120);
     });
+  }
+
+  function navigateToView(viewName) {
+    if (!viewName) return;
+    window.location.hash = `#${viewName}`;
+    if (window.Dashboard && typeof window.Dashboard.setActiveView === 'function') {
+      window.Dashboard.setActiveView(viewName);
+    }
+  }
+
+  function handleHashNavigation() {
+    const hash = window.location.hash.replace(/^#/, '');
+    const validViews = ['overview', 'live-monitor', 'system-flow', 'sensors', 'water-quality', 'floodshield', 'alerts', 'history', 'system-info'];
+    if (hash && validViews.includes(hash)) {
+      if (window.Dashboard && typeof window.Dashboard.setActiveView === 'function') {
+        window.Dashboard.setActiveView(hash);
+      }
+    }
   }
 
   /* ══════════════════════════════════════════════════════════════════════════
@@ -143,13 +186,10 @@
     document.getElementById('btn-pause-sim')?.addEventListener('click', () => window.SimulationService && window.SimulationService.togglePauseSimulation());
     document.getElementById('btn-reset-demo')?.addEventListener('click', () => window.SimulationService && window.SimulationService.resetSystemDemo());
     
-    // Clear alerts button
+    // Clear alerts button in Overview
     document.getElementById('btn-clear-alerts')?.addEventListener('click', () => {
-      if (window.AlertService && typeof window.AlertService.clearAlerts === 'function') {
-        window.AlertService.clearAlerts();
-      }
-      if (window.Dashboard && typeof window.Dashboard.render === 'function' && window.SystemState) {
-        window.Dashboard.render(window.SystemState.getState());
+      if (window.Dashboard && typeof window.Dashboard.clearAllAlerts === 'function') {
+        window.Dashboard.clearAllAlerts();
       }
     });
   }
@@ -161,7 +201,9 @@
         const step = e.target.closest('.timeline-step');
         if (step && step.dataset.stageIdx !== undefined) {
           const idx = parseInt(step.dataset.stageIdx, 10);
-          SimulationService.setStageIndex(idx);
+          if (window.SimulationService && typeof window.SimulationService.setStageIndex === 'function') {
+            window.SimulationService.setStageIndex(idx);
+          }
         }
       });
     }
@@ -179,13 +221,9 @@
   }
 
   function initModal() {
-    const demoBadge = document.getElementById('demo-badge');
     const modal = document.getElementById('demo-modal');
     const btnClose = document.getElementById('btn-close-modal');
 
-    if (demoBadge && modal) {
-      demoBadge.addEventListener('click', () => modal.classList.add('active'));
-    }
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => modal.classList.remove('active'));
     }

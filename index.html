@@ -23,9 +23,6 @@
 <div id="app">
 
   <!-- ══════════════════════════════════════════════════════════════════════════
-       LEFT NAVIGATION SIDEBAR
-       ══════════════════════════════════════════════════════════════════════════ -->
-  <!-- ══════════════════════════════════════════════════════════════════════════
        LEFT NAVIGATION SIDEBAR (RESPONSIVE DRAWER)
        ══════════════════════════════════════════════════════════════════════════ -->
   <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
@@ -47,49 +44,49 @@
     <nav class="sidebar-nav">
       <div class="nav-section-title">CONTROL ROOM</div>
       
-      <a href="#" class="nav-item active" data-view="overview" id="nav-overview">
+      <a href="#overview" class="nav-item active" data-view="overview" id="nav-overview">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         <span>OVERVIEW</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="live-monitor" id="nav-live-monitor">
+      <a href="#live-monitor" class="nav-item" data-view="live-monitor" id="nav-live-monitor">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         <span>LIVE MONITOR</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="system-flow" id="nav-system-flow">
+      <a href="#system-flow" class="nav-item" data-view="system-flow" id="nav-system-flow">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 9v12M9 6h12"/></svg>
         <span>SYSTEM FLOW</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="sensors" id="nav-sensors">
+      <a href="#sensors" class="nav-item" data-view="sensors" id="nav-sensors">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         <span>SENSORS</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="water-quality" id="nav-water-quality">
+      <a href="#water-quality" class="nav-item" data-view="water-quality" id="nav-water-quality">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
         <span>WATER QUALITY</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="floodshield" id="nav-floodshield">
+      <a href="#floodshield" class="nav-item" data-view="floodshield" id="nav-floodshield">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>FLOODSHIELD</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="alerts" id="nav-alerts">
+      <a href="#alerts" class="nav-item" data-view="alerts" id="nav-alerts">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span>ALERTS</span>
         <span class="badge" id="sidebar-alert-badge">3</span>
       </a>
 
-      <a href="#" class="nav-item" data-view="history" id="nav-history">
+      <a href="#history" class="nav-item" data-view="history" id="nav-history">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         <span>HISTORY</span>
       </a>
 
       <div class="nav-section-title" style="margin-top:10px;">DOCUMENTATION</div>
-      <a href="#" class="nav-item" data-view="system-info" id="nav-system-info">
+      <a href="#system-info" class="nav-item" data-view="system-info" id="nav-system-info">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         <span>SYSTEM INFO</span>
       </a>
@@ -127,7 +124,7 @@
 
         <div class="header-title-group">
           <h2>System Overview</h2>
-          <div class="sub">Real-time monitoring and operational status · ID: FGL-SIH26257-001</div>
+          <div class="sub">Real-time monitoring, M3 manual routing and operational status · ID: FGL-SIH26257-001</div>
         </div>
       </div>
 
@@ -135,16 +132,16 @@
         <div class="header-chip chip-online">
           <span class="status-dot"></span> <span class="chip-text">SYSTEM ONLINE</span>
         </div>
-        <div class="header-chip chip-online" id="db-status-badge" title="Supabase PostgreSQL Database Status">
+        <div class="header-chip chip-online" id="db-status-badge" title="Supabase PostgreSQL Database Status" style="cursor:pointer;">
           ● <span class="chip-text">DATABASE CONNECTED</span>
         </div>
         <div class="header-chip chip-time" id="header-clock">
-          21:42:18
+          15:08:29
         </div>
       </div>
 
       <div class="header-right">
-        <button class="icon-btn" id="btn-header-notif" title="System Notifications" aria-label="System Notifications">
+        <button class="icon-btn" id="btn-header-notif" title="System Notifications & Alerts" aria-label="System Notifications & Alerts">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </button>
       </div>
@@ -154,7 +151,7 @@
     <div class="views-wrapper">
 
       <!-- ════════════════════════════════════════════════════════════════════
-           01. OVERVIEW SCREEN (TOP: LIVE SYSTEM FLOW -> SYSTEM STATUS -> M3 ROUTING)
+           01. OVERVIEW SCREEN (TOP: LIVE SYSTEM FLOW -> STAGE -> STATUS -> M3 ROUTING)
            ════════════════════════════════════════════════════════════════════ -->
       <div class="view-page active-page" id="page-overview">
         
@@ -172,14 +169,17 @@
             </div>
           </div>
 
-          <!-- Dynamic SVG Container (Horizontal, Compact, Initial Viewport Optimized) -->
+          <!-- Dynamic SVG Container -->
           <div class="svg-schematic-container" id="svg-schematic-container"></div>
         </div>
 
-        <!-- SECTION 2: SYSTEM STATUS / KPI STRIP (DIRECTLY BELOW SYSTEM FLOW) -->
+        <!-- NEW FEATURE: LIVE GREYWATER TREATMENT STAGE HERO CARD (DIRECTLY NEAR SYSTEM FLOW) -->
+        <div id="live-treatment-stage-banner"></div>
+
+        <!-- SECTION 2: SYSTEM STATUS / KPI STRIP -->
         <div class="status-strip-panel">
           
-          <!-- Compact Status & KPI Strip -->
+          <!-- Status & KPI Strip -->
           <div class="status-kpi-row">
             <div class="status-kpi-box">
               <span class="status-kpi-lbl">SYSTEM STATUS</span>
@@ -279,7 +279,7 @@
           <div class="floodshield-card" id="floodshield-panel"></div>
         </div>
 
-        <!-- SECTION 4: LIVE SENSORS GRID (8 CARDS) -->
+        <!-- SECTION 5: LIVE SENSORS GRID (8 CARDS) -->
         <div class="sensor-section">
           <div class="section-head">
             <h3>LIVE SENSOR STATUS</h3>
@@ -288,7 +288,7 @@
           <div class="sensor-grid" id="sensor-grid"></div>
         </div>
 
-        <!-- SECTION 5: LIVE CHARTS GRID -->
+        <!-- SECTION 6: LIVE CHARTS GRID -->
         <div class="charts-grid">
           <div class="chart-panel">
             <div class="chart-header">
@@ -311,7 +311,7 @@
           </div>
         </div>
 
-        <!-- SECTION 6: WATER QUALITY & SYSTEM HEALTH GRID -->
+        <!-- SECTION 7: WATER QUALITY & SYSTEM HEALTH GRID -->
         <div class="dash-two-col">
           <div class="quality-panel">
             <div class="card-header-clean">
@@ -336,7 +336,7 @@
           </div>
         </div>
 
-        <!-- SECTION 7: ALERT CENTER & OPERATIONAL LOG -->
+        <!-- SECTION 8: ALERT CENTER & OPERATIONAL LOG -->
         <div class="events-panel">
           <div class="card-header-clean">
             <h4>ALERT CENTER & OPERATIONAL LOG</h4>
@@ -360,17 +360,7 @@
       <!-- ════════════════════════════════════════════════════════════════════
            02. LIVE MONITOR PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-live-monitor">
-        <div class="schematic-panel">
-          <div class="schematic-header">
-            <div class="schematic-title-group">
-              <h3>LIVE SYSTEM TELEMETRY MONITOR</h3>
-              <p>Continuous operational status stream for prototype demonstration</p>
-            </div>
-          </div>
-          <p style="color:var(--text-secondary); padding:12px;">Full-screen live stream for continuous observation of prototype telemetry.</p>
-        </div>
-      </div>
+      <div class="view-page" id="page-live-monitor"></div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            03. SYSTEM FLOW PAGE (WITH DECISION POINT)
@@ -380,10 +370,15 @@
           <div class="schematic-header">
             <div class="schematic-title-group">
               <h3>COMPLETE SYSTEM FLOW & DECISION LOGIC</h3>
-              <p>Physical greywater treatment sequence and automated FloodShield diversion routing</p>
+              <p>Physical 6-stage greywater treatment sequence and automated FloodShield diversion routing</p>
+            </div>
+            <div class="schematic-legend">
+              <div class="legend-item"><span class="legend-color" style="background:#0EA5E9"></span> <span>Treatment Path</span></div>
+              <div class="legend-item"><span class="legend-color" style="background:#16A34A"></span> <span>Recharge Open</span></div>
+              <div class="legend-item"><span class="legend-color" style="background:#DC2626"></span> <span>Flood Bypass Active</span></div>
             </div>
           </div>
-          <div class="svg-schematic-container" id="svg-flow-expanded-container" style="height:380px;"></div>
+          <div class="svg-schematic-container" id="svg-flow-expanded-container" style="height:340px;"></div>
           
           <div style="background:var(--bg-card-subtle); padding:14px; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-top:8px;">
             <h4 style="color:var(--navy-primary); font-size:13px; font-weight:700;">GROUND CONDITION DECISION LOGIC</h4>
@@ -405,128 +400,33 @@
            04. SENSORS PAGE
            ════════════════════════════════════════════════════════════════════ -->
       <div class="view-page" id="page-sensors">
-        <div class="events-panel">
-          <div class="card-header-clean">
-            <h3>SENSOR HARDWARE REGISTER TABLE</h3>
-            <span class="demo-tag">SIMULATED SENSORS</span>
-          </div>
-          <table class="events-table">
-            <thead>
-              <tr>
-                <th>SENSOR HARDWARE NAME</th>
-                <th>LOCATION</th>
-                <th>CURRENT VALUE</th>
-                <th>STATUS</th>
-                <th>LAST UPDATE</th>
-                <th>CONNECTION</th>
-              </tr>
-            </thead>
-            <tbody id="sensor-table-body"></tbody>
-          </table>
-        </div>
+        <div class="events-panel"></div>
       </div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            05. WATER QUALITY PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-water-quality">
-        <div class="quality-panel">
-          <div class="card-header-clean">
-            <h3>WATER QUALITY MONITORING & DISCHARGE STANDARDS</h3>
-            <span class="demo-tag">DEMO TELEMETRY</span>
-          </div>
-          <p style="color:var(--text-secondary); font-size:12.5px; line-height:1.5;">
-            Effluent parameters are monitored against standard Indian non-potable reuse and discharge norms (IS 10500 / CPCB). All values shown are demonstration figures for jury evaluation.
-          </p>
-        </div>
-      </div>
+      <div class="view-page" id="page-water-quality"></div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            06. FLOODSHIELD PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-floodshield">
-        <div class="schematic-panel">
-          <div class="schematic-header">
-            <div class="schematic-title-group">
-              <h3>FLOODSHIELD AUTOMATED BYPASS MECHANISM</h3>
-              <p>Hydraulic overflow prevention and groundwater protection</p>
-            </div>
-          </div>
-          <div style="padding:14px; color:var(--navy-primary); line-height:1.6; font-size:12.5px;">
-            <h4 style="color:var(--navy-primary); font-size:13.5px; font-weight:700;">The Conventional Soak-Pit Overflow Problem</h4>
-            <p style="margin-top:4px; color:var(--text-secondary);">
-              Conventional rural soak pits rely strictly on continuous soil percolation. When monsoonal downpours occur, soil saturation prevents absorption. The pits fill and overflow into village lanes, forming stagnant pools that breed disease vectors.
-            </p>
-            <h4 style="color:var(--blue-secondary); font-size:13.5px; font-weight:700; margin-top:12px;">The FLOWSHIELD Solution</h4>
-            <p style="margin-top:4px; color:var(--text-secondary);">
-              FLOWSHIELD deploys a capacitive moisture probe at the infiltration zone. As saturation exceeds 85%, the controller actuates a motorized valve to isolate the recharge bed, diverting treated effluent safely into a raised bypass channel.
-            </p>
-          </div>
-        </div>
-      </div>
+      <div class="view-page" id="page-floodshield"></div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            07. ALERTS PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-alerts">
-        <div class="events-panel">
-          <div class="card-header-clean">
-            <h3>SYSTEM ALARM & EVENT HISTORY</h3>
-          </div>
-          <p style="color:var(--text-secondary); padding:10px;">Full chronological log of operational notifications and threshold events.</p>
-        </div>
-      </div>
+      <div class="view-page" id="page-alerts"></div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            08. HISTORY PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-history">
-        <div class="events-panel">
-          <div class="card-header-clean">
-            <h3>HISTORICAL MONITORING LOG</h3>
-            <span class="demo-tag">SIMULATED HISTORY</span>
-          </div>
-          <table class="events-table">
-            <thead>
-              <tr>
-                <th>TIME</th>
-                <th>SYSTEM STAGE</th>
-                <th>FLOW RATE</th>
-                <th>WATER LEVEL</th>
-                <th>FLOOD STATUS</th>
-                <th>RECHARGE</th>
-                <th>HEALTH</th>
-              </tr>
-            </thead>
-            <tbody id="history-table-body"></tbody>
-          </table>
-        </div>
-      </div>
+      <div class="view-page" id="page-history"></div>
 
       <!-- ════════════════════════════════════════════════════════════════════
            09. SYSTEM INFO PAGE
            ════════════════════════════════════════════════════════════════════ -->
-      <div class="view-page" id="page-system-info">
-        <div class="schematic-panel">
-          <div class="schematic-header">
-            <div class="schematic-title-group">
-              <h3>SYSTEM SPECIFICATIONS & SIH PROBLEM STATEMENT</h3>
-            </div>
-          </div>
-          <div style="padding:14px; color:var(--navy-primary); line-height:1.6; font-size:12.5px;">
-            <h4 style="color:var(--navy-primary); font-weight:700;">PROJECT: FLOWSHIELD–GREYLOOP</h4>
-            <p style="color:var(--text-secondary); margin-top:2px;">Flood-Resilient, Minimum-Footprint Modular Greywater Management System</p>
-            
-            <h4 style="color:var(--navy-primary); font-weight:700; margin-top:10px;">PROBLEM STATEMENT: SIH26257</h4>
-            <p style="color:var(--text-secondary); margin-top:2px;">Decentralized greywater treatment and management system designed for rural households and land-constrained communities.</p>
-
-            <h4 style="color:var(--navy-primary); font-weight:700; margin-top:10px;">CORE INNOVATION</h4>
-            <p style="color:var(--text-secondary); margin-top:2px;">
-              Combines a compact multi-layer vertical biofilter (biochar, coco coir, sugarcane bagasse, rice husk) with automated soil-moisture-based recharge control and FloodShield bypass protection to prevent soak-pit failure.
-            </p>
-          </div>
-        </div>
-      </div>
+      <div class="view-page" id="page-system-info"></div>
 
     </div><!-- End Views Wrapper -->
   </main>
@@ -538,18 +438,18 @@
 <div class="modal-overlay" id="demo-modal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3>● DEMONSTRATION SIMULATION MODE</h3>
+      <h3>● DEMONSTRATION SIMULATION & SCADA ARCHITECTURE</h3>
       <button class="btn-action" id="btn-close-modal" style="padding:2px 8px;">✕</button>
     </div>
     <div class="modal-body">
       <p>
-        This dashboard interface is operating in <strong>Demonstration Simulation Mode</strong> for the Smart India Hackathon jury presentation.
+        This dashboard interface is operating in <strong>Demonstration Simulation Mode</strong> for the Smart India Hackathon jury presentation (Problem Statement: SIH26257).
       </p>
       <p style="margin-top:10px;">
-        All telemetry values (flow rate, water levels, soil moisture, and water quality benchmarks) are dynamically computed by the prototype simulation service.
+        All telemetry values (flow rate, water levels, soil moisture, and water quality benchmarks) are dynamically computed by the prototype simulation service and synchronized with the PostgreSQL cloud data store when available.
       </p>
       <p style="margin-top:10px;">
-        <strong>Hardware API Interface:</strong> The application architecture uses a decoupled data layer (<code>window.SimulationService</code>) allowing immediate replacement with live ESP32 MQTT / WebSocket telemetry streams upon field installation.
+        <strong>Hardware API Interface:</strong> The application architecture uses a decoupled data layer (<code>window.SimulationService</code> / <code>window.ApiService</code>) allowing immediate connection with field ESP32 controllers via MQTT / WebSocket.
       </p>
     </div>
   </div>

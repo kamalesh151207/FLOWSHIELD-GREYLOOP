@@ -7,10 +7,15 @@
 .views-wrapper {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .view-page {
@@ -18,6 +23,7 @@
   flex-direction: column;
   gap: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .view-page.active-page {

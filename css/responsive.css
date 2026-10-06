@@ -1,84 +1,974 @@
 /* ==========================================================================
    FLOWSHIELD–GREYLOOP | SCADA Control & IoT Monitoring Dashboard
-   Responsive Media Queries & Screen Adaptations
+   Master Responsive Layout Engine (Desktop, Tablet, Mobile, Small Phone)
+   Breakpoints:
+   - Large Desktop / Ultra-wide: >= 1200px
+   - Tablet Landscape / Small Laptops: 992px - 1199px
+   - Tablet Portrait: 768px - 991px
+   - Mobile Landscape & Phablet: 481px - 767px
+   - Compact Mobile Phones: <= 480px (320px, 360px, 375px, 390px, 414px)
    ========================================================================== */
 
-@media (max-width: 1280px) {
+/* ══════════════════════════════════════════════════════════════════════════
+   1. GLOBAL VIEWPORT & TOUCH SCROLL BASELINES
+   ══════════════════════════════════════════════════════════════════════════ */
+html, body {
+  width: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+#main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--bg-main);
+}
+
+.views-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   2. DESKTOP & LARGE MONITORS (>= 1200px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 1200px) {
+  #sidebar {
+    width: var(--sidebar-width);
+    transform: none !important;
+    position: relative !important;
+    display: flex !important;
+    flex-shrink: 0;
+    box-shadow: none;
+    z-index: 100;
+  }
+
+  .sidebar-backdrop {
+    display: none !important;
+  }
+
+  .mobile-menu-btn,
+  .sidebar-close-btn,
+  .header-brand-mobile {
+    display: none !important;
+  }
+
+  .views-wrapper {
+    padding: 16px 24px;
+    gap: 14px;
+  }
+
+  .status-kpi-row {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .m3-controls-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .timeline-bar {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .sensor-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dash-two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   3. TABLET LANDSCAPE / SMALL LAPTOPS (992px - 1199px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 992px) and (max-width: 1199px) {
+  #sidebar {
+    width: 230px;
+    transform: none !important;
+    position: relative !important;
+    display: flex !important;
+  }
+
+  .sidebar-backdrop,
+  .mobile-menu-btn,
+  .sidebar-close-btn,
+  .header-brand-mobile {
+    display: none !important;
+  }
+
+  .views-wrapper {
+    padding: 14px 20px;
+    gap: 12px;
+  }
+
   .status-kpi-row {
     grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
-  .kpi-grid {
+
+  .m3-controls-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
-  .dash-middle-grid {
-    grid-template-columns: 1fr;
-  }
+
   .sensor-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .timeline-bar {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .quality-grid,
+  .health-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .quality-grid {
-    grid-template-columns: 1fr;
+
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dash-two-col {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-@media (max-width: 992px) {
+/* ══════════════════════════════════════════════════════════════════════════
+   4. TABLET PORTRAIT & MOBILE DRAWER BASELINE (<= 991px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  /* Navigation Drawer */
   #sidebar {
-    width: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 82vw;
+    height: 100%;
+    height: 100dvh;
+    background: #FFFFFF;
+    box-shadow: 4px 0 24px rgba(11, 34, 57, 0.22);
+    transform: translateX(-100%);
+    z-index: 1200;
+    transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
   }
-  .brand-text,
-  .nav-section-title,
-  .nav-item span,
-  .nav-item .badge,
-  .sidebar-footer {
+
+  #sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: rgba(11, 34, 57, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 1100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+
+  .sidebar-close-btn {
+    display: inline-flex !important;
+  }
+
+  /* Header adjustments for Tablet */
+  #top-header {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .header-left {
+    gap: 10px;
+  }
+
+  .header-title-group h2 {
+    font-size: 14px;
+  }
+
+  .header-title-group .sub {
     display: none;
   }
-  .nav-item {
-    justify-content: center;
-    padding: 10px;
+
+  .views-wrapper {
+    padding: 14px 16px;
+    gap: 12px;
   }
+
+  /* Tablet Grids */
   .status-kpi-row {
     grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
-  .m3-controls-grid {
-    grid-template-columns: 1fr;
-  }
-  .timeline-bar {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
+
   .dash-two-col {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .quality-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .health-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .timeline-bar {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  /* Controls Row on Tablet */
+  .controls-action-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .condition-toggle-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .btn-toggle-group {
+    display: flex;
+    flex: 1;
+    max-width: 280px;
+  }
+
+  .btn-toggle {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .stage-control-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .stage-control-buttons .btn-action {
+    justify-content: center;
+    padding: 6px 4px;
+    font-size: 11px;
+    min-height: 38px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Tables */
+  .events-panel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .events-table {
+    min-width: 560px;
   }
 }
 
-@media (max-width: 600px) {
+/* ══════════════════════════════════════════════════════════════════════════
+   5. MOBILE PHONES (<= 767px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Mobile Header Bar */
   #top-header {
-    padding: 0 10px;
+    padding: 0 12px;
+    height: 52px;
+    gap: 8px;
   }
-  .header-title-group h2 {
-    font-size: 13px;
+
+  .header-left {
+    gap: 8px;
+    min-width: 0;
+    flex-shrink: 1;
   }
-  .header-clock {
+
+  .mobile-menu-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+  }
+
+  .header-brand-mobile {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .header-brand-mobile h1 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+  }
+
+  .header-title-group {
     display: none;
   }
-  .status-kpi-row {
-    grid-template-columns: 1fr;
+
+  .header-center {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
   }
+
+  .header-chip {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: var(--radius-sm);
+  }
+
+  #db-status-badge .chip-text {
+    display: none;
+  }
+
+  #header-clock {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+
+  .header-right {
+    display: flex;
+    gap: 4px;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Views Container */
+  .views-wrapper {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  /* 1. SCADA Live Schematic Container */
+  .schematic-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+
+  .schematic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-bottom: 6px;
+  }
+
+  .schematic-title-group h3 {
+    font-size: 13.5px;
+  }
+
+  .schematic-title-group p {
+    font-size: 11px;
+  }
+
+  .schematic-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    font-size: 10px;
+  }
+
+  .svg-schematic-container {
+    width: 100%;
+    height: 230px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    border-radius: var(--radius-sm);
+    position: relative;
+  }
+
+  .svg-schematic-container svg {
+    min-width: 620px;
+    height: 100%;
+    display: block;
+  }
+
+  /* 2. Status & KPI Strip */
+  .status-strip-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+
+  .status-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+
+  .status-kpi-box {
+    padding: 7px 8px;
+    min-height: 52px;
+    justify-content: center;
+  }
+
+  .status-kpi-lbl {
+    font-size: 8.5px;
+    letter-spacing: 0.2px;
+  }
+
+  .status-kpi-val {
+    font-size: 12px;
+    margin-top: 1px;
+  }
+
+  .status-kpi-sub {
+    font-size: 8.5px;
+  }
+
+  /* Condition & Stage Controls in Structured Mobile Grid */
+  .controls-action-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .condition-toggle-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .toggle-label {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .btn-toggle-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex: 1;
+    max-width: none;
+  }
+
+  .btn-toggle {
+    justify-content: center;
+    padding: 5px 6px;
+    font-size: 10px;
+    min-height: 34px;
+    white-space: nowrap;
+  }
+
+  /* Dedicated 2-Column Structured Action Grid for Mobile */
+  .stage-control-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .stage-control-buttons .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    font-size: 10.5px;
+    min-height: 36px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  #btn-prev-stage { grid-column: 1; }
+  #btn-next-stage { grid-column: 2; }
+  #btn-autoplay { grid-column: 1; }
+  #btn-pause-sim { grid-column: 2; }
+  #btn-reset-demo { grid-column: 1 / -1; }
+
+  /* Timeline Stepper (Horizontal Scroll Snap) */
+  .timeline-section {
+    gap: 4px;
+    margin-top: 2px;
+  }
+
+  .timeline-bar {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 6px;
+    padding: 2px 1px 6px 1px;
+  }
+
+  .timeline-step {
+    flex: 0 0 120px;
+    scroll-snap-align: start;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+  }
+
+  .step-num {
+    font-size: 8.5px;
+  }
+
+  .step-title {
+    font-size: 9.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .step-status {
+    font-size: 8px;
+  }
+
+  /* 3. M3 Routing Control Panel */
+  .m3-routing-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .m3-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+
+  .m3-title-box {
+    width: 100%;
+  }
+
+  .m3-panel-title {
+    font-size: 12.5px;
+  }
+
+  .m3-badge-interactive {
+    font-size: 8px;
+    padding: 1px 5px;
+  }
+
+  .m3-panel-sub {
+    font-size: 10.5px;
+  }
+
+  .m3-mode-toggle-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .toggle-mini-lbl {
+    font-size: 9.5px;
+  }
+
+  /* Vertical Stack for 3-Way Route Buttons */
+  .m3-controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .route-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+  }
+
+  .route-btn-left {
+    gap: 8px;
+  }
+
+  .route-btn-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .route-btn-name {
+    font-size: 11.5px;
+  }
+
+  .route-btn-sub {
+    font-size: 9.5px;
+  }
+
+  .route-btn-status {
+    font-size: 8.5px;
+    padding: 2px 6px;
+  }
+
+  .m3-status-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+  }
+
+  .m3-status-item {
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .m3-lbl {
+    font-size: 8px;
+  }
+
+  .m3-val {
+    font-size: 10.5px;
+  }
+
+  /* 4. Biofilter & FloodShield Cards */
+  .biofilter-detail-card,
+  .floodshield-card {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+
+  .card-header-clean h4 {
+    font-size: 11.5px;
+  }
+
+  .flood-metrics-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .flood-metric-box {
+    padding: 6px 8px;
+  }
+
+  .flood-metric-lbl {
+    font-size: 8.5px;
+  }
+
+  .flood-metric-val {
+    font-size: 11.5px;
+  }
+
+  /* 5. Sensor Cards Grid */
+  .sensor-section {
+    gap: 8px;
+  }
+
+  .section-head h3 {
+    font-size: 12.5px;
+  }
+
+  .sensor-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .sensor-card {
+    padding: 8px 10px;
+    gap: 3px;
+  }
+
+  .sensor-name {
+    font-size: 9.5px;
+  }
+
+  .sensor-badge {
+    font-size: 8px;
+    padding: 1px 4px;
+  }
+
+  .sensor-val {
+    font-size: 15px;
+  }
+
+  .sensor-unit {
+    font-size: 10px;
+  }
+
+  /* 6. Live Charts */
+  .chart-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 6px;
+  }
+
+  .chart-header h4 {
+    font-size: 11.5px;
+  }
+
+  .chart-canvas-wrap {
+    height: 140px;
+  }
+
+  /* 7. Water Quality & Health */
+  .quality-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+  }
+
+  .quality-panel h4 {
+    font-size: 11.5px;
+  }
+
+  .quality-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .health-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  /* 8. Table Containers */
+  .events-panel {
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .events-table {
+    min-width: 460px;
+    font-size: 10.5px;
+  }
+
+  .events-table th,
+  .events-table td {
+    padding: 5px 6px;
+  }
+
+  /* Modals & Dialogs */
+  .modal-overlay {
+    padding: 12px;
+  }
+
+  .modal-box {
+    padding: 14px;
+    border-radius: var(--radius-md);
+    gap: 10px;
+  }
+
+  .modal-head h3 {
+    font-size: 13px;
+  }
+
+  .modal-body {
+    font-size: 11.5px;
+  }
+
+  /* Toast Notification */
+  .dashboard-toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    font-size: 10.5px;
+    padding: 8px 12px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   6. SMALL MOBILE DEVICES (<= 480px / 320px - 390px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  #top-header {
+    padding: 0 8px;
+    height: 48px;
+  }
+
+  .header-brand-mobile h1 {
+    font-size: 13px;
+  }
+
+  .chip-online .chip-text {
+    display: none;
+  }
+
+  .chip-online {
+    padding: 3px 5px;
+  }
+
+  #header-clock {
+    font-size: 9.5px;
+    padding: 2px 5px;
+  }
+
+  .views-wrapper {
+    padding: 8px 8px;
+    gap: 8px;
+  }
+
+  .status-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+
+  .status-kpi-box {
+    padding: 5px 6px;
+    min-height: 48px;
+  }
+
+  .status-kpi-lbl {
+    font-size: 8px;
+  }
+
+  .status-kpi-val {
+    font-size: 11px;
+  }
+
+  .status-kpi-sub {
+    font-size: 7.5px;
+  }
+
+  .stage-control-buttons .btn-action {
+    font-size: 9.5px;
+    padding: 5px 4px;
+    min-height: 34px;
+  }
+
+  .m3-status-strip {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .bio-layer-item {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  .bio-layer-type {
+    font-size: 9px;
+  }
+
+  .sensor-val {
+    font-size: 14px;
+  }
+
+  .sensor-unit {
+    font-size: 9.5px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   7. ULTRA-COMPACT SMARTPHONES (<= 360px)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 360px) {
   .sensor-grid {
     grid-template-columns: 1fr;
   }
-  .m3-status-strip {
-    flex-direction: column;
-    align-items: flex-start;
+
+  .status-kpi-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
   }
-  .control-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .stage-control-buttons {
-    flex-wrap: wrap;
+
+  .status-kpi-val {
+    font-size: 10.5px;
   }
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   8. MOBILE LANDSCAPE (MAX-HEIGHT: 500px AND ORIENTATION: LANDSCAPE)
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+  #top-header {
+    height: 42px;
+    padding: 0 10px;
+  }
+
+  .views-wrapper {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .svg-schematic-container {
+    height: 180px;
+  }
+
+  .status-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chart-canvas-wrap {
+    height: 110px;
+  }
+
+  .modal-box {
+    max-height: 86vh;
+    padding: 10px;
+  }
+}

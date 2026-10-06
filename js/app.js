@@ -38,9 +38,46 @@
   });
 
   /* ══════════════════════════════════════════════════════════════════════════
-     NAVIGATION & VIEW SWITCHING
+     NAVIGATION & VIEW SWITCHING & MOBILE DRAWER
      ══════════════════════════════════════════════════════════════════════════ */
   function initNavigation() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const btnMobileMenu = document.getElementById('btn-mobile-menu');
+    const btnSidebarClose = document.getElementById('btn-sidebar-close');
+
+    function openSidebar() {
+      if (sidebar) sidebar.classList.add('mobile-open');
+      if (backdrop) backdrop.classList.add('active');
+      document.body.classList.add('sidebar-active');
+    }
+
+    function closeSidebar() {
+      if (sidebar) sidebar.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('active');
+      document.body.classList.remove('sidebar-active');
+    }
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSidebar();
+      });
+    }
+
+    if (btnSidebarClose) {
+      btnSidebarClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeSidebar();
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', () => {
+        closeSidebar();
+      });
+    }
+
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
       item.addEventListener('click', (e) => {
@@ -54,7 +91,33 @@
         if (window.Dashboard && typeof window.Dashboard.setActiveView === 'function') {
           window.Dashboard.setActiveView(targetView);
         }
+
+        // Auto close drawer on mobile after selection
+        closeSidebar();
       });
+    });
+
+    // Window resize & orientation observer to re-render charts & schematics cleanly
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (window.SystemState) {
+          const state = window.SystemState.getState();
+          if (window.ChartManager) {
+            window.ChartManager.drawFlowChart('chart-flow-canvas', state.history);
+            window.ChartManager.drawLevelChart('chart-level-canvas', state.history);
+          }
+          if (window.SchematicRenderer && window.Dashboard) {
+            const activeView = window.Dashboard.getActiveView ? window.Dashboard.getActiveView() : 'overview';
+            if (activeView === 'overview') {
+              window.SchematicRenderer.renderSchematic('svg-schematic-container', state);
+            } else if (activeView === 'system-flow') {
+              window.SchematicRenderer.renderSchematic('svg-flow-expanded-container', state);
+            }
+          }
+        }
+      }, 120);
     });
   }
 
@@ -137,6 +200,9 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.getElementById('demo-modal')?.classList.remove('active');
+        document.getElementById('sidebar')?.classList.remove('mobile-open');
+        document.getElementById('sidebar-backdrop')?.classList.remove('active');
+        document.body.classList.remove('sidebar-active');
       }
     });
   }

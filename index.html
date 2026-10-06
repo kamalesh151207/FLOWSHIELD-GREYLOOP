@@ -25,7 +25,12 @@
   <!-- ══════════════════════════════════════════════════════════════════════════
        LEFT NAVIGATION SIDEBAR
        ══════════════════════════════════════════════════════════════════════════ -->
-  <aside id="sidebar">
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       LEFT NAVIGATION SIDEBAR (RESPONSIVE DRAWER)
+       ══════════════════════════════════════════════════════════════════════════ -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop" aria-hidden="true"></div>
+
+  <aside id="sidebar" aria-label="Main Navigation">
     <div class="sidebar-brand">
       <div class="brand-icon">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -36,6 +41,7 @@
         <h1>FLOWSHIELD–GREYLOOP</h1>
         <span>GREYWATER MANAGEMENT SYSTEM</span>
       </div>
+      <button class="sidebar-close-btn" id="btn-sidebar-close" aria-label="Close navigation menu">✕</button>
     </div>
 
     <nav class="sidebar-nav">
@@ -106,6 +112,19 @@
     <!-- Top SCADA Header Bar -->
     <header id="top-header">
       <div class="header-left">
+        <button class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Open Navigation Menu" title="Open Navigation Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="header-brand-mobile">
+          <span class="brand-dot"></span>
+          <h1>FLOWSHIELD</h1>
+        </div>
+
         <div class="header-title-group">
           <h2>System Overview</h2>
           <div class="sub">Real-time monitoring and operational status · ID: FGL-SIH26257-001</div>
@@ -114,10 +133,10 @@
 
       <div class="header-center">
         <div class="header-chip chip-online">
-          <span class="status-dot"></span> SYSTEM ONLINE
+          <span class="status-dot"></span> <span class="chip-text">SYSTEM ONLINE</span>
         </div>
         <div class="header-chip chip-online" id="db-status-badge" title="Supabase PostgreSQL Database Status">
-          ● DATABASE CONNECTED
+          ● <span class="chip-text">DATABASE CONNECTED</span>
         </div>
         <div class="header-chip chip-time" id="header-clock">
           21:42:18
@@ -125,7 +144,7 @@
       </div>
 
       <div class="header-right">
-        <button class="icon-btn" id="btn-header-notif" title="System Notifications">
+        <button class="icon-btn" id="btn-header-notif" title="System Notifications" aria-label="System Notifications">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </button>
       </div>

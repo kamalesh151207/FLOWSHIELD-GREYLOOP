@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/styles.css"/>
   <link rel="stylesheet" href="css/dashboard.css"/>
   <link rel="stylesheet" href="css/responsive.css"/>
+  <link rel="stylesheet" href="css/waterquality.css"/>
   
   <link rel="icon" href="assets/icons/logo.svg"/>
 </head>
@@ -151,16 +152,32 @@
     <div class="views-wrapper">
 
       <!-- ════════════════════════════════════════════════════════════════════
-           01. OVERVIEW SCREEN (TOP: LIVE SYSTEM FLOW -> STAGE -> STATUS -> M3 ROUTING)
+           01. OVERVIEW SCREEN (PRIMARY: SYSTEM FLOW & WATER QUALITY MONITORING)
            ════════════════════════════════════════════════════════════════════ -->
       <div class="view-page active-page" id="page-overview">
         
-        <!-- SECTION 1: TOP COMPLETE SYSTEM FLOW SCHEMATIC (PRIMARY HERO COMPONENT) -->
+        <!-- SHORT & SIMPLE WATER QUALITY PARAMETERS (BEFORE & AFTER FILTRATION) - SHOWN AT TOP WHEN OPENED -->
+        <div class="quality-panel" id="overview-effluent-panel">
+          <div class="card-header-clean">
+            <div>
+              <h4 style="font-size:12px; font-weight:700; color:var(--navy-primary); text-transform:uppercase;">
+                WATER QUALITY PARAMETERS — BEFORE &amp; AFTER FILTRATION (CPCB / IS 10500 STANDARDS)
+              </h4>
+              <p style="font-size:11.5px; color:var(--text-secondary); margin-top:2px;">
+                Before and after filtration telemetry for pH, TDS, Turbidity and non-potable reuse standards.
+              </p>
+            </div>
+            <span class="demo-tag">DEMO TELEMETRY</span>
+          </div>
+          <div class="quality-grid" id="quality-grid"></div>
+        </div>
+
+        <!-- PRIMARY SECTION A: SYSTEM FLOW SCHEMATIC -->
         <div class="schematic-panel">
           <div class="schematic-header">
             <div class="schematic-title-group">
-              <h3>LIVE SYSTEM FLOW</h3>
-              <p>Real-time visualization of greywater treatment, reuse and flood-resilient routing</p>
+              <h3>SYSTEM FLOW &amp; TREATMENT SEQUENCE</h3>
+              <p>Physical greywater progression: Collection → Pretreatment → Biofiltration → Storage → M3 Distribution</p>
             </div>
             <div class="schematic-legend">
               <div class="legend-item"><span class="legend-color" style="background:#0EA5E9"></span> <span>Treatment Path</span></div>
@@ -173,10 +190,69 @@
           <div class="svg-schematic-container" id="svg-schematic-container"></div>
         </div>
 
-        <!-- NEW FEATURE: LIVE GREYWATER TREATMENT STAGE HERO CARD (DIRECTLY NEAR SYSTEM FLOW) -->
+        <!-- LIVE GREYWATER TREATMENT STAGE HERO CARD -->
         <div id="live-treatment-stage-banner"></div>
 
-        <!-- SECTION 2: SYSTEM STATUS / KPI STRIP -->
+        <!-- COMPACT M3 WATER ROUTING CONTROL PANEL -->
+        <div class="m3-routing-panel" id="m3-routing-panel">
+          <div id="m3-routing-panel-content"></div>
+        </div>
+
+        <!-- PRIMARY SECTION B: WATER QUALITY MONITORING (BEFORE & AFTER FILTRATION) -->
+        <div id="overview-water-quality-section"></div>
+
+        <!-- HOUSEHOLD GREYWATER SOURCES & NON-TOILET ISOLATION BANNER (EXCHANGED TO THIS POSITION) -->
+        <div class="flow-sources-banner" id="flow-sources-banner">
+          <div class="flow-sources-header">
+            <span class="flow-sources-title">HOUSEHOLD GREYWATER SOURCES &amp; COLLECTION SEQUENCE</span>
+            <span class="blackwater-isolated-tag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              TOILET WASTEWATER (BLACKWATER) DISCONNECTED
+            </span>
+          </div>
+
+          <div class="flow-sources-grid">
+            <div class="flow-source-node">
+              <div class="source-icon">🚿</div>
+              <div class="source-meta">
+                <span class="source-name">SHOWER &amp; BATH</span>
+                <span class="source-desc">Low turbidity · Soap/Surfactants</span>
+              </div>
+            </div>
+            <div class="flow-source-node">
+              <div class="source-icon">🚰</div>
+              <div class="source-meta">
+                <span class="source-name">WASH BASIN</span>
+                <span class="source-desc">Personal hygiene · Mild greywater</span>
+              </div>
+            </div>
+            <div class="flow-source-node">
+              <div class="source-icon">🍽️</div>
+              <div class="source-meta">
+                <span class="source-name">KITCHEN SINK</span>
+                <span class="source-desc">Food particles · Grease interceptor</span>
+              </div>
+            </div>
+            <div class="flow-source-node">
+              <div class="source-icon">🧺</div>
+              <div class="source-meta">
+                <span class="source-name">LAUNDRY</span>
+                <span class="source-desc">Detergents &amp; lint screen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-collection-pipe">
+            <span class="pipe-icon">➔</span>
+            <span class="pipe-label">COMMON GREYWATER COLLECTION PIPE (PVC-U PN10)</span>
+            <span class="pipe-arrow">➔</span>
+            <span class="chamber-label">COMMON COLLECTION CHAMBER &amp; SUMP</span>
+            <span class="pipe-arrow">➔</span>
+            <span class="feed-label">PRE-TREATMENT &amp; BIOFILTER SEQUENCE</span>
+          </div>
+        </div>
+
+        <!-- SECTION C: SYSTEM STATUS & OPERATIONAL CONTROLS STRIP -->
         <div class="status-strip-panel">
           
           <!-- Status & KPI Strip -->
@@ -259,12 +335,7 @@
 
         </div><!-- End Status Strip Panel -->
 
-        <!-- SECTION 3: COMPACT M3 WATER ROUTING CONTROL PANEL -->
-        <div class="m3-routing-panel" id="m3-routing-panel">
-          <div id="m3-routing-panel-content"></div>
-        </div>
-
-        <!-- SECTION 4: BIOFILTER DETAIL & FLOODSHIELD PROTECTION (DEEP DIVE BELOW THE FOLD) -->
+        <!-- SECTION C: CONSOLIDATED SYSTEM DIAGNOSTICS & TELEMETRY -->
         <div class="dash-two-col">
           <!-- Biofilter Cross-section Card -->
           <div class="biofilter-detail-card">
@@ -279,16 +350,16 @@
           <div class="floodshield-card" id="floodshield-panel"></div>
         </div>
 
-        <!-- SECTION 5: LIVE SENSORS GRID (8 CARDS) -->
+        <!-- Consolidated Sensor Telemetry -->
         <div class="sensor-section">
           <div class="section-head">
-            <h3>LIVE SENSOR STATUS</h3>
+            <h3>LIVE SENSOR HARDWARE TELEMETRY</h3>
             <span class="demo-tag">DEMO DATA — SIMULATED TELEMETRY</span>
           </div>
           <div class="sensor-grid" id="sensor-grid"></div>
         </div>
 
-        <!-- SECTION 6: LIVE CHARTS GRID -->
+        <!-- Real-Time Charts Grid -->
         <div class="charts-grid">
           <div class="chart-panel">
             <div class="chart-header">
@@ -311,35 +382,10 @@
           </div>
         </div>
 
-        <!-- SECTION 7: WATER QUALITY & SYSTEM HEALTH GRID -->
-        <div class="dash-two-col">
-          <div class="quality-panel">
-            <div class="card-header-clean">
-              <h4>WATER QUALITY MONITORING</h4>
-              <span class="demo-tag">DEMO DATA</span>
-            </div>
-            <div class="quality-grid" id="quality-grid"></div>
-            <p style="font-size:11px; color:var(--text-secondary); margin-top:4px;">
-              * Prototype monitoring interface — values shown for demonstration only.
-            </p>
-          </div>
-
-          <div class="quality-panel">
-            <div class="card-header-clean">
-              <h4>SYSTEM HEALTH & CONNECTION STATUS</h4>
-              <span class="kpi-status-tag ok">SIMULATED CONNECTION</span>
-            </div>
-            <div class="health-grid" id="health-grid"></div>
-            <p style="font-size:11px; color:var(--text-secondary); margin-top:8px;">
-              All virtual telemetry nodes broadcasting nominal heartbeat status.
-            </p>
-          </div>
-        </div>
-
-        <!-- SECTION 8: ALERT CENTER & OPERATIONAL LOG -->
+        <!-- Alert Center & Operational Log -->
         <div class="events-panel">
           <div class="card-header-clean">
-            <h4>ALERT CENTER & OPERATIONAL LOG</h4>
+            <h4>ALERT CENTER &amp; OPERATIONAL LOG</h4>
             <button class="btn-action" id="btn-clear-alerts" style="padding:2px 8px; font-size:11px;">CLEAR ALERTS</button>
           </div>
           <table class="events-table">
@@ -467,6 +513,7 @@
 <script src="js/schematicRenderer.js"></script>
 <script src="js/simulationService.js"></script>
 <script src="js/dashboard.js"></script>
+<script src="js/waterQualityComparison.js"></script>
 <script src="js/app.js"></script>
 
 </body>

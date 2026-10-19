@@ -158,6 +158,23 @@
       ]
     },
 
+    waterQualityComparison: {
+      isDemo: true,
+      timestamp: null,
+      before: {
+        ph:           { value: 7.8,  unit: '',       name: 'pH Level',                     maxScale: 14 },
+        turbidity:    { value: 45.0, unit: 'NTU',    name: 'Turbidity',                    maxScale: 100 },
+        tds:          { value: 420,  unit: 'mg/L',   name: 'Total Dissolved Solids (TDS)', maxScale: 1000 },
+        conductivity: { value: 680,  unit: 'µS/cm',  name: 'Electrical Conductivity',      maxScale: 1500 }
+      },
+      after: {
+        ph:           { value: 7.4,  unit: '',       name: 'pH Level',                     maxScale: 14 },
+        turbidity:    { value: 18.0, unit: 'NTU',    name: 'Turbidity',                    maxScale: 100 },
+        tds:          { value: 390,  unit: 'mg/L',   name: 'Total Dissolved Solids (TDS)', maxScale: 1000 },
+        conductivity: { value: 630,  unit: 'µS/cm',  name: 'Electrical Conductivity',      maxScale: 1500 }
+      }
+    },
+
     history: {
       flowRate: Array.from({ length: 20 }, (_, i) => +(4.6 + Math.sin(i * 0.4) * 0.4 + Math.random() * 0.1).toFixed(1)),
       waterLevel: Array.from({ length: 20 }, (_, i) => +(63 + Math.cos(i * 0.3) * 1.5 + Math.random() * 0.2).toFixed(1)),

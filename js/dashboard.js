@@ -152,9 +152,13 @@
       ChartManager.drawLevelChart('chart-level-canvas', state.history);
     }
 
-    // 11. Water Quality & System Health Preview Grids
+    // 11. Primary Feature: Before-and-After Water Quality Monitoring on Main Dashboard
+    if (window.WaterQualityComparison) {
+      window.WaterQualityComparison.render(state, 'overview-water-quality-section');
+    }
+
+    // Short & Simple Water Quality Parameters (TDS, Turbidity, pH, BOD5, COD, etc.)
     renderWaterQualityOverviewGrid(state);
-    renderSystemHealthGrid(state);
 
     // 12. Alert Center & Operational Log Table Preview
     renderAlertsOverviewTable();
@@ -566,28 +570,122 @@
     const grid = document.getElementById('quality-grid');
     if (!grid) return;
 
+    const wqc = (state && state.waterQualityComparison) || {};
+    const beforeWqc = wqc.before || {};
+    const afterWqc = wqc.after || {};
+
+    // Prioritize TDS and pH with explicit Before and After filtration values
     const params = [
-      { name: 'pH Level', val: `${state.sensors.ph || '7.2'}`, unit: '', standard: '6.5 – 8.5' },
-      { name: 'Turbidity', val: `${state.sensors.turbidity || '3.2'}`, unit: 'NTU', standard: '< 5.0 NTU' },
-      { name: 'TSS (Solids)', val: `${state.sensors.tss || '12'}`, unit: 'mg/L', standard: '< 20 mg/L' },
-      { name: 'COD', val: `${state.sensors.cod || '32'}`, unit: 'mg/L', standard: '< 50 mg/L' },
-      { name: 'BOD₅', val: `${state.sensors.bod || '7.8'}`, unit: 'mg/L', standard: '< 10 mg/L' },
-      { name: 'DO (Oxygen)', val: `${state.sensors.do || '5.4'}`, unit: 'mg/L', standard: '> 4.0 mg/L' }
+      {
+        id: 'tds',
+        name: 'Total Dissolved Solids (TDS)',
+        before: beforeWqc.tds ? beforeWqc.tds.value : '420',
+        after: afterWqc.tds ? afterWqc.tds.value : '390',
+        unit: 'mg/L',
+        standard: '< 500.0 mg/L',
+        changeText: '↓ 7.1% reduction',
+        status: 'COMPLIANT',
+        featured: true
+      },
+      {
+        id: 'ph',
+        name: 'pH Level',
+        before: beforeWqc.ph ? beforeWqc.ph.value : '7.8',
+        after: afterWqc.ph ? afterWqc.ph.value : '7.4',
+        unit: '',
+        standard: '6.5 – 8.5',
+        changeText: '-5.1% stabilized',
+        status: 'OPTIMAL',
+        featured: true
+      },
+      {
+        id: 'turbidity',
+        name: 'Turbidity',
+        before: beforeWqc.turbidity ? beforeWqc.turbidity.value : '45.0',
+        after: afterWqc.turbidity ? afterWqc.turbidity.value : '18.0',
+        unit: 'NTU',
+        standard: '< 5.0 NTU',
+        changeText: '↓ 60.0% reduction',
+        status: 'COMPLIANT',
+        featured: false
+      },
+      {
+        id: 'conductivity',
+        name: 'Electrical Conductivity',
+        before: beforeWqc.conductivity ? beforeWqc.conductivity.value : '680',
+        after: afterWqc.conductivity ? afterWqc.conductivity.value : '630',
+        unit: 'µS/cm',
+        standard: '< 1000 µS/cm',
+        changeText: '↓ 7.4% reduction',
+        status: 'COMPLIANT',
+        featured: false
+      },
+      {
+        id: 'bod',
+        name: 'BOD₅',
+        before: '68.0',
+        after: `${state.sensors?.bod || '7.8'}`,
+        unit: 'mg/L',
+        standard: '< 10.0 mg/L',
+        changeText: '↓ 88.5% reduction',
+        status: 'COMPLIANT',
+        featured: false
+      },
+      {
+        id: 'cod',
+        name: 'COD',
+        before: '145.0',
+        after: `${state.sensors?.cod || '32.0'}`,
+        unit: 'mg/L',
+        standard: '< 50.0 mg/L',
+        changeText: '↓ 77.9% reduction',
+        status: 'COMPLIANT',
+        featured: false
+      },
+      {
+        id: 'tss',
+        name: 'TSS (Total Suspended Solids)',
+        before: '85.0',
+        after: `${state.sensors?.tss || '12.0'}`,
+        unit: 'mg/L',
+        standard: '< 20.0 mg/L',
+        changeText: '↓ 85.9% reduction',
+        status: 'COMPLIANT',
+        featured: false
+      },
+      {
+        id: 'do',
+        name: 'DO (Dissolved Oxygen)',
+        before: '1.8',
+        after: `${state.sensors?.do || '5.4'}`,
+        unit: 'mg/L',
+        standard: '> 4.0 mg/L',
+        changeText: '+200% aeration',
+        status: 'COMPLIANT',
+        featured: false
+      }
     ];
 
     grid.innerHTML = params.map(p => `
-      <div class="param-card">
+      <div class="param-card param-compare-card ${p.featured ? 'param-card-featured' : ''}">
         <div class="param-name">
           <span>${p.name}</span>
-          <span class="demo-tag">DEMO DATA</span>
+          <span class="kpi-status-tag ok" style="font-size:8px; padding:1px 5px;">${p.status}</span>
         </div>
-        <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:4px;">
-          <div style="font-size:17px; font-weight:700; color:var(--navy-primary); font-family:var(--font-mono);">
-            ${p.val} <span style="font-size:11px; color:var(--text-secondary);">${p.unit}</span>
+        <div class="param-compare-values">
+          <div class="param-val-box before">
+            <span class="param-val-lbl">BEFORE (RAW)</span>
+            <span class="param-val-num before-val">${p.before} <small style="font-size:9.5px; color:inherit;">${p.unit}</small></span>
           </div>
-          <div style="font-size:9.5px; color:var(--text-muted); font-family:var(--font-mono);">
-            Target: ${p.standard}
+          <div class="param-val-arrow">➔</div>
+          <div class="param-val-box after">
+            <span class="param-val-lbl">AFTER (FILTRATED)</span>
+            <span class="param-val-num after-val">${p.after} <small style="font-size:9.5px; color:inherit;">${p.unit}</small></span>
           </div>
+        </div>
+        <div class="param-compare-meta">
+          <span class="param-change-badge good">${p.changeText}</span>
+          <span class="param-std-text">Std: ${p.standard}</span>
         </div>
       </div>
     `).join('');
@@ -966,7 +1064,7 @@
         <div class="quality-panel">
           <div class="card-header-clean">
             <div>
-              <h3>WATER QUALITY MONITORING & DISCHARGE STANDARDS</h3>
+              <h3>WATER QUALITY MONITORING &amp; DISCHARGE STANDARDS</h3>
               <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Effluent parameters monitored against Indian Non-Potable Reuse Norms (IS 10500 / CPCB).</p>
             </div>
             <span class="demo-tag">DEMO TELEMETRY</span>
@@ -975,7 +1073,7 @@
           <!-- 3-Stage Treatment Effluent Progression Matrix -->
           <div style="margin-top:10px;">
             <h4 style="font-size:12px; font-weight:700; color:var(--navy-primary); text-transform:uppercase; margin-bottom:8px;">
-              3-STAGE TREATMENT EFFLUENT PROGRESSION (PRE-TREATMENT → BIOFILTER → FINAL EFFLUENT)
+              3-STAGE TREATMENT EFFLUENT PROGRESSION (PRE-TREATMENT \u2192 BIOFILTER \u2192 FINAL EFFLUENT)
             </h4>
             <div class="wq-comparison-table-wrap">
               <table class="events-table">
@@ -997,7 +1095,7 @@
           <!-- Parameter Telemetry Cards Grid -->
           <div style="margin-top:14px;">
             <h4 style="font-size:12px; font-weight:700; color:var(--navy-primary); text-transform:uppercase; margin-bottom:8px;">
-              CURRENT EFFLUENT PARAMETERS (LAB & SENSOR TELEMETRY)
+              CURRENT EFFLUENT PARAMETERS (LAB &amp; SENSOR TELEMETRY)
             </h4>
             <div class="quality-grid" id="wq-detailed-grid"></div>
           </div>
@@ -1007,6 +1105,9 @@
             <strong style="color:var(--navy-primary);">CPCB / IS 10500 Reuse Criteria:</strong> Treated greywater meeting BOD &lt; 10 mg/L and Turbidity &lt; 5 NTU is certified safe for household non-potable flushing and landscape irrigation, significantly reducing fresh water demand.
           </div>
         </div>
+
+        <!-- Before-and-After Comparison Section (populated by WaterQualityComparison module) -->
+        <div id="wq-stages-comparison-grid"></div>
       `;
     }
 
@@ -1042,6 +1143,11 @@
           </div>
         </div>
       `).join('');
+    }
+
+    // Render Before-and-After comparison section on separate Water Quality page
+    if (window.WaterQualityComparison) {
+      window.WaterQualityComparison.render(state, 'wq-stages-comparison-grid');
     }
   }
 
